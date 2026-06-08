@@ -56,15 +56,27 @@ function Signup() {
                         {
                             return toast.error("Pls enter Valid email")
                         }
+                        
 
                         axios.post(BACKEND_URL + "/api/auth/send-otp", {email : Email})
                         .then((response) => {
+                          console.log("ok")
                             toast.success(response.data.message)
                             if(response.status === 201)
                             {
                                 setOtpSent(true)
                             }
                         
+                        })
+                        .catch((error) => {
+                          const message = error.response?.data?.message;
+
+                          if (message === "User already exists") {
+                            toast.error("Account already exists. Please login.");
+                            nav("/login");
+                          } else {
+                            toast.error(message || "Failed to send OTP");
+                          }
                         })
                     
             } }                   
@@ -194,7 +206,7 @@ function Signup() {
 
         <p className="text-center text-gray-300 mt-6">
           Already have an account?{" "}
-          <span className="text-cyan-400 cursor-pointer hover:underline">
+          <span onClick={() => {nav("/login")}} className="text-cyan-400 cursor-pointer hover:underline">
             Login
           </span>
         </p>
