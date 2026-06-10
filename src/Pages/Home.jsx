@@ -1,8 +1,13 @@
+import Navbar from "../Components/Navbar"
+import Sidebar from "../Components/Sidebar"
 
 
 const Home = () => {
   return (
-    <div>Hello</div>
+    <div>
+      <Navbar/>
+      <Sidebar/>
+    </div>
   )
 }
 

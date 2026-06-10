@@ -210,6 +210,7 @@ export default function CompleteProfile() {
                     if(res.status === 200)
                     {
                         toast.success("profile completed")
+                        nav("/home")
                     }
                 })
                 .catch((err) => {

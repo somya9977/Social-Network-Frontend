@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom"
 import { Mail, Lock, Eye, EyeOff } from "lucide-react"
 import toast from "react-hot-toast"
 import axios from "axios"
+import { userReducer } from "../Utils/User"
+import { useDispatch } from "react-redux"
 
 export default function Login() {
   const nav = useNavigate();
@@ -10,6 +12,7 @@ export default function Login() {
   const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
+  const dispatch = useDispatch()
 
   return (
     <div className="min-h-screen bg-slate-950 flex relative overflow-hidden">
@@ -125,6 +128,7 @@ export default function Login() {
                   if(res.status === 200)
                   {
                     const user = res.data.user
+                    dispatch(userReducer(user))
                     
                     if(user.isCompleted)
                     {

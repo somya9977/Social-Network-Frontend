@@ -19,6 +19,7 @@
     "react-hot-toast": "^2.6.0",
     "react-redux": "^9.3.0",
     "react-router-dom": "^7.17.0",
+    "redux-persist": "^6.0.0",
     "tailwindcss": "^4.3.0",
     "validator": "^13.15.35"
   },

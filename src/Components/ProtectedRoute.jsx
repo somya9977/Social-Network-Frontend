@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import { Navigate } from "react-router-dom"
 import axios from "axios"
 
+
 const ProtectedRoute = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(null)
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
@@ -11,9 +12,9 @@ const ProtectedRoute = ({ children }) => {
     const verifyToken = async () => {
       try {
         await axios.get(BACKEND_URL + "/api/auth/verify", { withCredentials: true })
-        setIsAuthenticated(true)  // 
+        setIsAuthenticated(true)  
       } catch {
-        setIsAuthenticated(false) // 
+        setIsAuthenticated(false) 
       }
     };
 
