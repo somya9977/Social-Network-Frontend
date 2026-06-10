@@ -120,11 +120,20 @@ export default function Login() {
                   return toast.error("Password require")
                 }
 
-                axios.post(BACKEND_URL + "/api/auth/login", {email : email, username : email, password})
+                axios.post(BACKEND_URL + "/api/auth/login", {email : email, username : email, password}, { withCredentials: true })
                 .then((res) => {
                   if(res.status === 200)
                   {
-                    nav("/home")
+                    const user = res.data.user
+                    
+                    if(user.isCompleted)
+                    {
+                      nav("/home")
+                    }
+                    else
+                    {
+                      nav("/complete-profile")
+                    }
                   }
                 })
                 .catch(() => {
