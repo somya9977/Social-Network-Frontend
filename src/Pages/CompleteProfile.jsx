@@ -143,7 +143,7 @@ export default function CompleteProfile() {
             </div>
           </div>
 
-          <div className="relative">
+          <div className="relative gap-3 mb-3">
             <Calendar size={17} className="absolute left-3.5 top-3.5 text-slate-400" />
             <input
                 type="date"
