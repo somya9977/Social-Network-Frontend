@@ -9,7 +9,7 @@ const ProtectedRoute = ({ children }) => {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
   const dispatch = useDispatch()
 
-  // Redux se user lo
+  
   const user = useSelector((state) => state.user)
   
 
