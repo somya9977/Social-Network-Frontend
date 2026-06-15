@@ -8,7 +8,9 @@ export default function Navbar() {
   const user = useSelector((state) => state.user)
   const [search, setSearch] = useState("")
   
-
+  
+  const currentUser = user?.data || user?.user || user
+  
  
 
   return (
@@ -41,15 +43,23 @@ export default function Navbar() {
      <div className="flex items-center gap-2 text-white">
 
   {/* Avatar */}
-  <div
-    onClick={() => nav("/profile")}
-    className="w-8 h-8 rounded-full bg-blue-900 text-blue-300 flex items-center justify-center text-xs font-semibold cursor-pointer hover:ring-2 hover:ring-blue-500 transition"
-  >
+<div
+  onClick={() => nav("/profile")}
+  className="w-8 h-8 rounded-full overflow-hidden bg-blue-900 text-blue-300 flex items-center justify-center cursor-pointer hover:ring-2 hover:ring-blue-500 transition"
+>
+  {currentUser?.displayPicture || currentUser?.dp ? (
+    <img
+      src={currentUser.displayPicture || currentUser.dp}
+      alt="Profile"
+      className="w-full h-full object-cover"
+    />
+  ) : (
     <User size={18} />
-  </div>
+  )}
+</div>
 
   <span className="text-sm font-medium">
-    {user?.username || "Guest"}
+    {user?.data?.firstName || user?.user?.username ||user.firstName||"Guest"}
   </span>
 
 </div>

@@ -7,13 +7,19 @@ import Home from "./Pages/Home"
 import CompleteProfile from "./Pages/CompleteProfile"
 import ProtectedRoute from "./Components/ProtectedRoute"
 import Profile from "./Pages/Profile"
+import EditProfile from "./Pages/EditProfile"
 
 
 const App = () => {
+  
+
+
   return (
     <div>
 
       <Toaster />
+
+      
       <Routes>
         <Route path="/" element = {<LandingPage/>}/>
         <Route path="/signUp" element = {<SignUp />} />
@@ -23,6 +29,7 @@ const App = () => {
         <Route path="/home" element = {<ProtectedRoute><Home /></ProtectedRoute> } />
         <Route path="/complete-profile" element = {<ProtectedRoute><CompleteProfile/></ProtectedRoute>}/>
         <Route path="/profile" element = {<ProtectedRoute><Profile/></ProtectedRoute>} />
+        <Route path="/edit" element = {<ProtectedRoute><EditProfile/></ProtectedRoute>} />
       </Routes>
     </div>
   )

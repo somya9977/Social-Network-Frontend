@@ -1,8 +1,10 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { User,  Camera, Pencil, Check, Calendar } from "lucide-react"
 import toast from "react-hot-toast"
 import axios from "axios"
+import { useDispatch } from "react-redux"
+import { userReducer } from "../Utils/User"
 
 export default function CompleteProfile() {
   const nav = useNavigate()
@@ -15,10 +17,12 @@ export default function CompleteProfile() {
     gender: "",
     bio: "",
   })
-  console.log(form)
+  
   const [dp, setDp] = useState(null)
   const [avatarPreview, setAvatarPreview] = useState(null)
   const [loading] = useState(false)
+  const [imageUrl, setImageUrl] = useState("")
+  const dispatch = useDispatch()
 
 
   const handleChange = (e) => {
@@ -32,7 +36,25 @@ export default function CompleteProfile() {
     setAvatarPreview(URL.createObjectURL(file))
   }
 
+  useEffect(() => {
+    
+    if(dp)
+    {
+       const formData = new FormData()
+       formData.append("file", dp)
+       formData.append("upload_preset", "social")
 
+       axios.post("https://api.cloudinary.com/v1_1/duy7jeoyu/image/upload", formData)
+       .then((res) => {
+        
+        setImageUrl(res.data.secure_url)
+       
+       })
+    }
+
+ 
+
+  }, [avatarPreview, dp])
 
  
 
@@ -201,14 +223,15 @@ export default function CompleteProfile() {
                     dob : form.dob, 
                     gender : form.gender, 
                     bio : form.bio, 
-                    dp : avatarPreview 
+                    dp : imageUrl
                     }, 
                     {
                     withCredentials: true,
                     })
                 .then((res) => {
                     if(res.status === 200)
-                    {
+                    {   
+                        dispatch(userReducer(res.data.user))
                         toast.success("profile completed")
                         nav("/home")
                     }

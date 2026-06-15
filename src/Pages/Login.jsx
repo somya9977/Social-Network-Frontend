@@ -128,7 +128,7 @@ export default function Login() {
                   if(res.status === 200)
                   {
                     const user = res.data.user
-                    dispatch(userReducer(user))
+                    dispatch(userReducer(res.data.user))
                     
                     if(user.isCompleted)
                     {
