@@ -117,16 +117,19 @@ export default function Profile() {
     )
   }
   
-  function PostCard({ post }) {
-    const [hovered, setHovered] = useState(false)
-  
-    return (
-      <div
-        className="relative aspect-square bg-slate-800 cursor-pointer overflow-hidden"
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-      >
-        {/* Post Image ya placeholder */}
+
+
+function PostCard({ post }) {
+  const [hovered, setHovered] = useState(false)
+ 
+  return (
+    <div
+      className="bg-[#0a0f1e] border border-slate-800 rounded-2xl overflow-hidden cursor-pointer transition-colors hover:border-slate-700"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      {/* Image */}
+      <div className="relative aspect-square bg-slate-800">
         {post.image ? (
           <img src={post.image} alt="post" className="w-full h-full object-cover" />
         ) : (
@@ -134,24 +137,45 @@ export default function Profile() {
             <Camera size={28} />
           </div>
         )}
-  
-        {/* Hover Overlay */}
-        {hovered && (
-          <div className="absolute inset-0 bg-black/55 flex items-center justify-center gap-5">
-            <div className="flex items-center gap-1.5 text-white text-sm font-semibold">
-              <Heart size={17} className="fill-white" />
-              {post.likes?.length ?? 0}
-            </div>
-            <div className="flex items-center gap-1.5 text-white text-sm font-semibold">
-              <MessageCircle size={17} className="fill-white" />
-              {post.comments?.length ?? 0}
-            </div>
-          </div>
-        )}
-      </div>
-    )
-  }
  
+        {/* Hover overlay */}
+        <div className={`absolute inset-0 bg-black/55 flex items-center justify-center gap-4 transition-opacity duration-200
+          ${hovered ? "opacity-100" : "opacity-0"}`}>
+          <div className="flex items-center gap-1.5 text-white text-sm font-semibold">
+            <Heart size={16} className="fill-white" />
+            {post.likes?.length ?? 0}
+          </div>
+          <div className="flex items-center gap-1.5 text-white text-sm font-semibold">
+            <MessageCircle size={16} className="fill-white" />
+            {post.comments?.length ?? 0}
+          </div>
+        </div>
+      </div>
+ 
+      {/* Caption + stats — hamesha visible */}
+      <div className="p-2.5">
+        {post.caption ? (
+          <p className="text-slate-400 text-xs leading-relaxed line-clamp-2">
+            {post.caption}
+          </p>
+        ) : (
+          <p className="text-slate-600 text-xs italic">No caption</p>
+        )}
+ 
+        <div className="flex items-center gap-3 mt-1.5">
+          <span className="flex items-center gap-1 text-slate-500 text-xs">
+            <Heart size={13} />
+            {post.likes?.length ?? 0}
+          </span>
+          <span className="flex items-center gap-1 text-slate-500 text-xs">
+            <MessageCircle size={13} />
+            {post.comments?.length ?? 0}
+          </span>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 
 

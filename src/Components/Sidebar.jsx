@@ -1,5 +1,5 @@
 import { useNavigate, useLocation } from "react-router-dom"
-import { Home, User, MessageCircle, LogOut } from "lucide-react"
+import { Home, User, MessageCircle, LogOut, PlusSquare } from "lucide-react"
 import axios from "axios"
 import toast from "react-hot-toast"
 import { clearUser } from "../Utils/User"
@@ -33,6 +33,22 @@ export default function Sidebar() {
 
           <span className="opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
             Home
+          </span>
+        </button>
+
+        {/* Create Post */}
+        <button
+          onClick={() => nav("/create-post")}
+          className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm transition text-left ${
+            pathname === "/create-post"
+              ? "bg-blue-900/50 text-blue-400"
+              : "text-slate-400 hover:bg-slate-800 hover:text-slate-100"
+          }`}
+        >
+          <PlusSquare size={18} className="flex-shrink-0" />
+
+          <span className="opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+            Create Post
           </span>
         </button>
 

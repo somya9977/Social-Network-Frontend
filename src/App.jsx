@@ -8,6 +8,7 @@ import CompleteProfile from "./Pages/CompleteProfile"
 import ProtectedRoute from "./Components/ProtectedRoute"
 import Profile from "./Pages/Profile"
 import EditProfile from "./Pages/EditProfile"
+import CreatePost from "./Pages/CreatePost"
 
 
 const App = () => {
@@ -30,6 +31,7 @@ const App = () => {
         <Route path="/complete-profile" element = {<ProtectedRoute><CompleteProfile/></ProtectedRoute>}/>
         <Route path="/profile" element = {<ProtectedRoute><Profile/></ProtectedRoute>} />
         <Route path="/edit" element = {<ProtectedRoute><EditProfile/></ProtectedRoute>} />
+        <Route path="/create-post" element = {<ProtectedRoute><CreatePost/></ProtectedRoute>} />
       </Routes>
     </div>
   )
