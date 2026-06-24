@@ -30,6 +30,7 @@ const App = () => {
         <Route path="/home" element = {<ProtectedRoute><Home /></ProtectedRoute> } />
         <Route path="/complete-profile" element = {<ProtectedRoute><CompleteProfile/></ProtectedRoute>}/>
         <Route path="/profile" element = {<ProtectedRoute><Profile/></ProtectedRoute>} />
+        <Route path="/profile/:id" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path="/edit" element = {<ProtectedRoute><EditProfile/></ProtectedRoute>} />
         <Route path="/create-post" element = {<ProtectedRoute><CreatePost/></ProtectedRoute>} />
       </Routes>
