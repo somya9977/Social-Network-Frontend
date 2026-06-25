@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useSelector } from "react-redux"
-import {  Search, User, Users } from "lucide-react"
+import {  Search, User } from "lucide-react"
 import axios from "axios"
 
 export default function Navbar() {
@@ -10,9 +10,29 @@ export default function Navbar() {
   const [search, setSearch] = useState("")
   const [users, setUsers] = useState([])
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
+  const dataref = useRef("")
+  const invisibleDiv = useRef(null)
+  const [skip, setSkip] = useState(0)
+  const scrollRef = useRef(null)
+  const [hasMore, setHasMore] = useState(true)
   
   
   const currentUser = user?.data || user?.user || user
+
+  useEffect(() => {
+    const handleClick = (e) => {
+      if (dataref.current && !dataref.current.contains(e.target)) {
+        setUsers([])
+      }
+    }
+    document.addEventListener("click", handleClick)
+    return () => document.removeEventListener("click", handleClick)
+  }, [])
+
+  useEffect(() => {
+    setSkip(0)
+    setHasMore(true)
+  }, [search])
   
   
 
@@ -25,12 +45,43 @@ export default function Navbar() {
     }
 
     const timer = setTimeout(async () => {
-      const res = axios.get(BACKEND_URL + `/api/profile/search?query=${search}`, {withCredentials : true})
-      setUsers((await res).data.data)
+      const res = await axios.get(BACKEND_URL + `/api/profile/search?query=${search}&skip=${skip}`, {withCredentials : true})
+       const newData = res.data.data
+
+        if (newData.length === 0) {
+          setHasMore(false)   // ab aage data nahi hai, observer ko rokna hai
+          return               // empty response pe state update mat karo
+        }
+
+      if (skip === 0) {
+        setUsers(newData)
+      } else {
+        setUsers((prev) => [...prev, ...newData])
+      }
     }, 300)
+  
 
     return () => clearTimeout(timer)
-  }, [search])
+  }, [search, skip])
+
+
+    useEffect(() => {
+    if(!scrollRef.current || !invisibleDiv.current) return
+
+     const observ = new IntersectionObserver(([entry]) => 
+      {
+      if(entry.isIntersecting && users.length > 0 && hasMore) 
+        {
+          setSkip((prev) => prev + 5)
+        }
+      }, {
+      root: scrollRef.current,
+      threshold: 0
+    })
+
+    observ.observe(invisibleDiv.current)
+    return () => observ.disconnect()
+  }, [users])
  
 
   return (
@@ -48,7 +99,7 @@ export default function Navbar() {
   </div>
 
   {/* Center */}
-  <div className="flex justify-center flex-1 relative">
+  <div ref={dataref} className="flex justify-center flex-1 relative">
     <div className="flex items-center gap-2 bg-slate-800 border border-slate-700 rounded-xl px-3 py-1.5 w-80 ">
       <Search size={15} className="text-slate-500 flex-shrink-0" />
 
@@ -60,7 +111,7 @@ export default function Navbar() {
         className="bg-transparent text-slate-300 text-sm outline-none placeholder-slate-500 w-full"
       />
 {users.length > 0 && (
-  <div
+  <div ref={scrollRef}
     className="absolute top-14 left-0 w-full bg-slate-900 border border-white/10 rounded-xl shadow-lg overflow-y-auto z-50 max-h-[330px] no-scrollbar"
   >
     {users.map((item) => {
@@ -94,6 +145,7 @@ export default function Navbar() {
         </div>
       )
     })}
+    <div ref={invisibleDiv} className="h-[10px]"></div>
   </div>
 )}
     </div>
