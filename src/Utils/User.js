@@ -9,9 +9,19 @@ const userSlice = createSlice({
         },
         clearUser : () => {
             return {} 
+        },
+        
+        updatePost : (state, action) => {
+            const { postId, updatedFields } = action.payload
+            return {
+                ...state,
+                posts: state.posts.map((p) =>
+                    p._id === postId ? { ...p, ...updatedFields } : p
+                ),
+            }
         }
     }
 })
 
 export default userSlice.reducer
-export const { userReducer, clearUser } = userSlice.actions
+export const { userReducer, clearUser, updatePost } = userSlice.actions

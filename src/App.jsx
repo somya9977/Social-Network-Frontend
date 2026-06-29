@@ -9,6 +9,7 @@ import ProtectedRoute from "./Components/ProtectedRoute"
 import Profile from "./Pages/Profile"
 import EditProfile from "./Pages/EditProfile"
 import CreatePost from "./Pages/CreatePost"
+import BottomBar from "./Components/BottomBar"
 
 
 const App = () => {
@@ -34,6 +35,7 @@ const App = () => {
         <Route path="/edit" element = {<ProtectedRoute><EditProfile/></ProtectedRoute>} />
         <Route path="/create-post" element = {<ProtectedRoute><CreatePost/></ProtectedRoute>} />
       </Routes>
+      <BottomBar/>
     </div>
   )
 }

@@ -91,34 +91,34 @@ export default function Profile() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 pb-10">
+    <div className="min-h-screen bg-slate-950 pb-20">
 
       {/* Cover Photo */}
-      <div className="h-44 bg-gradient-to-br from-blue-900 to-slate-800 relative">
+      <div className="h-32 sm:h-44 bg-gradient-to-br from-blue-900 to-slate-800 relative">
         {isOwnProfile && (
-          <button className="absolute bottom-3 right-4 flex items-center gap-1.5 bg-black/50 border border-slate-600 text-slate-300 text-xs px-3 py-1.5 rounded-lg hover:bg-black/70 transition">
+          <button className="absolute bottom-3 right-3 sm:right-4 flex items-center gap-1.5 bg-black/50 border border-slate-600 text-slate-300 text-xs px-2.5 sm:px-3 py-1.5 rounded-lg hover:bg-black/70 transition">
             <Camera size={13} />
-            Edit cover
+            <span className="hidden sm:inline">Edit cover</span>
           </button>
         )}
       </div>
 
       {/* Avatar + Action Buttons */}
-      <div className="px-6 relative">
-        <div className="absolute -top-12 left-6 w-24 h-24 rounded-full border-4 border-slate-950 bg-blue-900 text-blue-300 flex items-center justify-center text-2xl font-bold overflow-hidden">
+      <div className="px-4 sm:px-6 relative">
+        <div className="absolute -top-10 sm:-top-12 left-4 sm:left-6 w-20 h-20 sm:w-24 sm:h-24 rounded-full border-4 border-slate-950 bg-blue-900 text-blue-300 flex items-center justify-center text-xl sm:text-2xl font-bold overflow-hidden">
           {user?.dp || user?.displayPicture
             ? <img src={user.dp || user.displayPicture} alt="avatar" className="w-full h-full object-cover" />
             : initials}
         </div>
 
-        <div className="flex justify-end gap-2 pt-3 mb-14">
+        <div className="flex justify-end gap-2 pt-3 mb-12 sm:mb-14">
           {isOwnProfile ? (
             <>
-              <button onClick={() => {nav("/edit")}} className="flex items-center gap-1.5 px-4 py-1.5 bg-slate-800 border border-slate-700 text-slate-200 text-sm rounded-xl hover:bg-slate-700 transition font-medium">
+              <button onClick={() => {nav("/edit")}} className="flex items-center gap-1.5 px-3 sm:px-4 py-1.5 bg-slate-800 border border-slate-700 text-slate-200 text-xs sm:text-sm rounded-xl hover:bg-slate-700 transition font-medium">
                 <Edit size={14} />
-                Edit Profile
+                <span className="hidden xs:inline sm:inline">Edit Profile</span>
               </button>
-              <button className="w-9 h-9 bg-slate-800 border border-slate-700 text-slate-400 rounded-xl flex items-center justify-center hover:bg-slate-700 transition">
+              <button className="w-9 h-9 bg-slate-800 border border-slate-700 text-slate-400 rounded-xl flex items-center justify-center hover:bg-slate-700 transition shrink-0">
                 <MoreHorizontal size={16} />
               </button>
             </>
@@ -140,19 +140,19 @@ export default function Profile() {
       </div>
 
       {/* Profile Info */}
-      <div className="px-6 mb-5">
-        <h1 className="text-white text-xl font-bold">
+      <div className="px-4 sm:px-6 mb-5">
+        <h1 className="text-white text-lg sm:text-xl font-bold break-words">
           {user?.firstName} {user?.lastName}
         </h1>
         <p className="text-slate-500 text-sm mt-0.5">@{user?.username}</p>
 
         {user?.bio && (
-          <p className="text-slate-400 text-sm mt-3 leading-relaxed max-w-lg">
+          <p className="text-slate-400 text-sm mt-3 leading-relaxed max-w-lg break-words">
             {user.bio}
           </p>
         )}
 
-        <div className="flex flex-wrap gap-4 mt-3">
+        <div className="flex flex-wrap gap-3 sm:gap-4 mt-3">
           {user?.location && (
             <div className="flex items-center gap-1.5 text-slate-500 text-sm">
               <MapPin size={14} />
@@ -169,27 +169,27 @@ export default function Profile() {
       </div>
 
       {/* Stats */}
-      <div className="flex gap-8 px-6 py-4 border-y border-slate-800 mb-5">
-        <div className="text-center">
-          <p className="text-white font-bold text-lg">{posts?.length ?? 0}</p>
+      <div className="flex gap-4 sm:gap-8 px-4 sm:px-6 py-4 border-y border-slate-800 mb-5 overflow-x-auto">
+        <div className="text-center shrink-0">
+          <p className="text-white font-bold text-base sm:text-lg">{posts?.length ?? 0}</p>
           <p className="text-slate-500 text-xs">Posts</p>
         </div>
-        <div className="text-center cursor-pointer hover:opacity-80 transition">
-          <p className="text-white font-bold text-lg">
+        <div className="text-center cursor-pointer hover:opacity-80 transition shrink-0">
+          <p className="text-white font-bold text-base sm:text-lg">
             {user?.followers?.length >= 1000
               ? `${(user.followers.length / 1000).toFixed(1)}k`
               : user?.followers?.length ?? 0}
           </p>
           <p className="text-slate-500 text-xs">Followers</p>
         </div>
-        <div className="text-center cursor-pointer hover:opacity-80 transition">
-          <p className="text-white font-bold text-lg">{user?.following?.length ?? 0}</p>
+        <div className="text-center cursor-pointer hover:opacity-80 transition shrink-0">
+          <p className="text-white font-bold text-base sm:text-lg">{user?.following?.length ?? 0}</p>
           <p className="text-slate-500 text-xs">Following</p>
         </div>
       </div>
 
       {/* Posts Grid */}
-      <div className="px-6">
+      <div className="px-2 sm:px-6">
         {!posts || posts.length === 0 ? (
           <div className="text-center py-16">
             <Camera size={36} className="text-slate-700 mx-auto mb-3" />
@@ -198,7 +198,7 @@ export default function Profile() {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-3 gap-0.5">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-1 sm:gap-0.5">
             {posts?.map((post) => (
               <PostCard key={post._id} post={post} />
             ))}
@@ -210,12 +210,13 @@ export default function Profile() {
 }
 
 
-function PostCard({ post }) {
+function PostCard({ post, onClick }) {
   const [hovered, setHovered] = useState(false)
 
   return (
     <div
-      className="bg-[#0a0f1e] border border-slate-800 rounded-2xl overflow-hidden cursor-pointer transition-colors hover:border-slate-700"
+      onClick={onClick}
+      className="bg-[#0a0f1e] border border-slate-800 rounded-xl sm:rounded-2xl overflow-hidden cursor-pointer transition-colors hover:border-slate-700"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -241,7 +242,7 @@ function PostCard({ post }) {
         </div>
       </div>
 
-      <div className="p-2.5">
+      <div className="p-2 sm:p-2.5">
         {post.caption ? (
           <p className="text-slate-400 text-xs leading-relaxed line-clamp-2">
             {post.caption}
