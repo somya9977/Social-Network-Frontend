@@ -5,7 +5,7 @@ const navItems = [
   { to: "/home", icon: Home, label: "Home" },
 
   { to: "/create-post", icon: PlusSquare, label: "Add" },
-  { to: "/notifications", icon: MessageCircle, label: "Notifications" },
+  { to: "/messages", icon: MessageCircle, label: "Notifications" },
   { to: "/profile", icon: User, label: "Profile" },
 ]
 

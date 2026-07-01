@@ -10,6 +10,7 @@ import Profile from "./Pages/Profile"
 import EditProfile from "./Pages/EditProfile"
 import CreatePost from "./Pages/CreatePost"
 import BottomBar from "./Components/BottomBar"
+import Chats from "./Pages/Chats"
 
 
 const App = () => {
@@ -34,6 +35,7 @@ const App = () => {
         <Route path="/profile/:id" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path="/edit" element = {<ProtectedRoute><EditProfile/></ProtectedRoute>} />
         <Route path="/create-post" element = {<ProtectedRoute><CreatePost/></ProtectedRoute>} />
+        <Route path="/messages" element = {<ProtectedRoute><Chats /></ProtectedRoute>} />
       </Routes>
       <BottomBar/>
     </div>

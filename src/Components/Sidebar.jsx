@@ -94,28 +94,29 @@ export default function Sidebar() {
       </div>
 
       {/* Logout */}
-      <div className="p-3 border-t border-slate-800">
-        <button
-          onClick={() => {
-            axios.post(BACKEND_URL + "/api/auth/logout", {}, { withCredentials: true })
-            .then((res) => {
-                if(res.status === 200)
-                {
-                    toast.success("Sucessful logout")
-                    dispatch(clearUser())
-                    nav("/login")
-                }
-            })
-          }}
-          className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm text-red-400 hover:bg-red-500/10 transition"
-        >
-          <LogOut size={18} className="flex-shrink-0" />
+      
+<div className="p-3 pb-15 border-t border-slate-800">
+  <button
+    onClick={() => {
+      axios.post(BACKEND_URL + "/api/auth/logout", {}, { withCredentials: true })
+      .then((res) => {
+          if(res.status === 200)
+          {
+              toast.success("Sucessful logout")
+              dispatch(clearUser())
+              nav("/login")
+          }
+      })
+    }}
+    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm text-red-400 hover:bg-red-500/10 transition"
+  >
+    <LogOut size={18} className="flex-shrink-0" />
 
-          <span className="opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-            Logout
-          </span>
-        </button>
-      </div>
+    <span className="opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+      Logout
+    </span>
+  </button>
+</div>
 
     </aside>
   )

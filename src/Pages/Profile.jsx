@@ -2,6 +2,9 @@ import { useEffect, useState } from "react"
 import { MapPin, Calendar, Edit, MoreHorizontal, Heart, MessageCircle, Camera, UserPlus, UserCheck } from "lucide-react"
 import { useNavigate, useParams } from "react-router-dom"
 import { useSelector } from "react-redux"
+import PostModal from "./PostModal"
+import { useDispatch } from "react-redux"
+import { updatePost } from "../Utils/User"
 import axios from "axios"
 
 export default function Profile() {
@@ -9,6 +12,7 @@ export default function Profile() {
   const nav = useNavigate()
   const { id } = useParams()
   const myData = useSelector((state) => state.user)
+  const dispatch = useDispatch()
 
   const isOwnProfile = !id
 
@@ -16,6 +20,7 @@ export default function Profile() {
   const [loading, setLoading] = useState(false)
   const [isFollowing, setIsFollowing] = useState(false)
   const [followLoading, setFollowLoading] = useState(false)
+  const [selectedPost, setSelectedPost] = useState(null)
 
   useEffect(() => {
     if (!id) {
@@ -42,6 +47,21 @@ export default function Profile() {
 
     fetchUser()
   }, [id])
+
+  const handleUpdatePost = (postId, updatedFields) => {
+  if (isOwnProfile) {
+    // Redux update — apni profile ke liye
+    dispatch(updatePost({ postId, updatedFields }))
+  } else {
+    // local state update — kisi dusre ka profile dekhte waqt
+    setViewedUser((prev) => ({
+      ...prev,
+      posts: prev.posts.map((p) =>
+        p._id === postId ? { ...p, ...updatedFields } : p
+      ),
+    }))
+  }
+}
 
   const handleFollowToggle = async () => {
     try {
@@ -200,11 +220,18 @@ export default function Profile() {
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-1 sm:gap-0.5">
             {posts?.map((post) => (
-              <PostCard key={post._id} post={post} />
+              <PostCard key={post._id} post={post} onClick={() => setSelectedPost(post)} />
             ))}
           </div>
         )}
       </div>
+      {selectedPost && (
+    <PostModal
+      post={selectedPost}
+      onClose={() => setSelectedPost(null)}
+      onUpdatePost={handleUpdatePost}
+    />
+  )}
     </div>
   )
 }
